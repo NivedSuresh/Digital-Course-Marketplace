@@ -9,23 +9,40 @@ import jakarta.persistence.Id
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
 import jakarta.persistence.Table
+import java.time.LocalDate
 
 
+
+/**
+ * Will act as a many-to-many table for user <-> bought course
+ * */
 @Entity
 @Table(name = "purchases")
 data class Purchase(
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id", nullable = false)
-    val customer: User,
+    /* This property will help us to load customer_id without loading the customer */
+    @Column(name = "customer_id", nullable = false)
+    val customerId: Long,
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "course_id", nullable = false)
+    @JoinColumn(name = "customer_id", nullable = false, insertable = false, updatable = false)
+    val customer: User,
+
+    /* This property will help us to load course_id without loading the course */
+    @Column(name = "course_id", nullable = false)
+    val courseId: Long,
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "course_id", nullable = false, insertable = false, updatable = false)
     val course: Course,
 
     @Column(nullable = false)
-    val amountPaid: Double
+    val amountPaid: Double,
+
+    @Column(nullable = false)
+    val purchaseDate: LocalDate,
 )
 
