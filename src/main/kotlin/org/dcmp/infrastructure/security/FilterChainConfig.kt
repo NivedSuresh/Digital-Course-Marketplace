@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod
 import org.springframework.security.authentication.AuthenticationManager
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
@@ -24,19 +25,15 @@ class FilterChainConfig(private val authenticationManager: AuthenticationManager
 
         http.sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
 
-        http.authorizeHttpRequests { auth ->
-            auth.requestMatchers(HttpMethod.POST, "/login", "/signup", "/error").permitAll()
-                .requestMatchers("/api/v1/creator/**").hasRole("CREATOR")
-                .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
-                .requestMatchers("/api/v1/customer/**").hasAnyRole("ADMIN", "CUSTOMER")
-                .anyRequest().authenticated()
-        }
+        http.authorizeHttpRequests { it
+            .requestMatchers("/login", "/logout", "/signup").permitAll()
+            .requestMatchers(HttpMethod.POST, "/creator/course").hasAnyAuthority("CREATOR", "ADMIN") }
+            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter::class.java)
 
         http.authenticationManager(authenticationManager)
-
-        http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter::class.java)
 
         return http.build()
     }
 
 }
+

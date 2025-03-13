@@ -1,26 +1,40 @@
 package org.dcmp.infrastructure.security
 
 import jakarta.servlet.FilterChain
+import jakarta.servlet.ServletException
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.web.filter.OncePerRequestFilter
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.User
 import org.springframework.security.oauth2.jwt.JwtDecoder
 import org.springframework.security.oauth2.jwt.Jwt
 import org.springframework.security.oauth2.jwt.JwtException
 import org.springframework.stereotype.Component
+import java.io.IOException
 
 
 @Component
 class JwtAuthFilter(private val jwtDecoder: JwtDecoder) : OncePerRequestFilter() {
 
+    companion object {
+        private val ignorablePaths = setOf("/api/v1/login", "/api/v1/logout", "/api/v1/signup")
+    }
+
+    @Throws(IOException::class, ServletException::class)
     override fun doFilterInternal(
         request: HttpServletRequest,
         response: HttpServletResponse,
         filterChain: FilterChain
     ) {
+
+        val path = request.requestURI
+        if (ignorablePaths.contains(path)) {
+            filterChain.doFilter(request, response)
+            return
+        }
         val token = extractToken(request)
 
         if (token != null) {
@@ -44,11 +58,11 @@ class JwtAuthFilter(private val jwtDecoder: JwtDecoder) : OncePerRequestFilter()
 
 
     private fun getAuthentication(jwt: Jwt): UsernamePasswordAuthenticationToken {
-        val username = jwt.subject
-        val roles = jwt.getClaimAsStringList("roles") ?: listOf()
+        val userId = jwt.subject
+        val roles = jwt.getClaimAsStringList("authority") ?: listOf()
 
-        val authorities = roles.map { org.springframework.security.core.authority.SimpleGrantedAuthority(it) }
-        val principal = User(username, "", authorities)
+        val authorities = roles.map { SimpleGrantedAuthority(it) }
+        val principal = User(userId, "", authorities)
 
         return UsernamePasswordAuthenticationToken(principal, null, authorities)
     }
