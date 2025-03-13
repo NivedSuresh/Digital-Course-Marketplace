@@ -1,18 +1,14 @@
 package org.dcmp.infrastructure.security
 
-import lombok.extern.slf4j.Slf4j
 import org.apache.logging.log4j.util.Strings
 import org.dcmp.domain.exception.ErrorCode
-import org.dcmp.presentation.advice.InvalidCredentialsException
+import org.dcmp.api.advice.InvalidCredentialsException
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.security.authentication.AccountStatusUserDetailsChecker
 import org.springframework.security.authentication.AuthenticationManager
-import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
-import org.springframework.security.core.authority.SimpleGrantedAuthority
-import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Component
 import java.util.*
