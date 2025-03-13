@@ -6,8 +6,7 @@ import org.dcmp.domain.contracts.RequestHandler
 import org.dcmp.application.service.IJwtService
 import org.dcmp.domain.exception.ErrorCode
 import org.dcmp.infrastructure.security.DcmpUserDetails
-import org.dcmp.api.advice.UnexpectedStateException
-import org.springframework.context.event.EventListener
+import org.dcmp.domain.exception.UnexpectedStateException
 import org.springframework.http.HttpStatus
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
