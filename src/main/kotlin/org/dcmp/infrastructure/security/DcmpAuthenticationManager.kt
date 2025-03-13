@@ -2,7 +2,7 @@ package org.dcmp.infrastructure.security
 
 import org.apache.logging.log4j.util.Strings
 import org.dcmp.domain.exception.ErrorCode
-import org.dcmp.api.advice.InvalidCredentialsException
+import org.dcmp.domain.exception.InvalidCredentialsException
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.security.authentication.AccountStatusUserDetailsChecker

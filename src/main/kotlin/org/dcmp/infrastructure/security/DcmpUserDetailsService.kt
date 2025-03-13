@@ -1,7 +1,7 @@
 package org.dcmp.infrastructure.security
 
 import org.dcmp.infrastructure.persistence.jpa.UserRepository
-import org.dcmp.api.advice.UserNotFoundException
+import org.dcmp.domain.exception.UserNotFoundException
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.stereotype.Service
