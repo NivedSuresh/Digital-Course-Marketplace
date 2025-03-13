@@ -13,4 +13,5 @@ interface UserRepository: JpaRepository<User, Long> {
     fun findByUsername(username: String): Optional<User>
     fun findByEmail(email: String): Optional<User>
     fun findByAuthority(authority: Role): MutableList<User>
+    fun existsByEmail(email: String): Boolean
 }

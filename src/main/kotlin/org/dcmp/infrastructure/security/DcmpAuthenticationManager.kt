@@ -15,7 +15,7 @@ import java.util.*
 
 
 @Component
-class DcmpAuthenticationManager(private val userDetailsService: DcmpUserDetailsService): AuthenticationManager {
+class DcmpAuthenticationManager(private val userDetailsService: DcmpUserDetailsService, private val  passwordEncoder: PasswordEncoder): AuthenticationManager {
 
    val log: Logger = LoggerFactory.getLogger(DcmpAuthenticationManager::class.java)
 
@@ -24,7 +24,8 @@ class DcmpAuthenticationManager(private val userDetailsService: DcmpUserDetailsS
         val userDetails: DcmpUserDetails = userDetailsService.loadUserByUsername(authentication.name) as DcmpUserDetails
         val userEnteredPassword = Objects.toString(authentication.credentials, Strings.EMPTY)
 
-        if (userEnteredPassword != userDetails.password) {
+
+        if (!passwordEncoder.matches(userEnteredPassword, userDetails.password)) {
             log.error(
                 "Invalid login attempt for the identifier : {}",
                 authentication.name

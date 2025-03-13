@@ -11,7 +11,7 @@ class DcmpUserDetailsService(private val userRepository: UserRepository): UserDe
 
     override fun loadUserByUsername(email: String?): UserDetails {
         val user = userRepository.findByEmail(email!!).orElseThrow { UserNotFoundException("User not found with the email: $email") }
-        return DcmpUserDetails(user.email, user.hashedPassword, user.authority, user.userId!!)
+        return DcmpUserDetails(user.email, user.hashedPassword, user.authority, user.id!!)
     }
 
 }

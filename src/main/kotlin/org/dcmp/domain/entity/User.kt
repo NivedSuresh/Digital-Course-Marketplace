@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor
 data class User(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val userId: Long? = null,
+    val id: Long? = null,
 
     @Column(nullable = false)
     val username: String,
