@@ -1,4 +1,4 @@
-package org.dcmp.presentation.controllers
+package org.dcmp.api.controllers
 
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping

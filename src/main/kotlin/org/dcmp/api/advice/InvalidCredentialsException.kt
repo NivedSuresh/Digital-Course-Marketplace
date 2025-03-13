@@ -1,4 +1,4 @@
-package org.dcmp.presentation.advice
+package org.dcmp.api.advice
 
 import org.dcmp.domain.exception.ErrorCode
 import org.dcmp.domain.exception.GlobalException
