@@ -7,9 +7,11 @@ import org.dcmp.application.mapper.UserMapper
 import org.dcmp.application.service.impl.JwtService
 import org.dcmp.domain.contracts.RequestHandler
 import org.dcmp.infrastructure.persistence.jpa.UserRepository
+import org.springframework.stereotype.Component
 import java.time.Instant
 import java.time.temporal.ChronoUnit
 
+@Component
 class SignupHandler(private val userRepository: UserRepository, private val jwtService: JwtService): RequestHandler<SignupCommand, LoginResponse> {
 
     override fun handle(request: SignupCommand): LoginResponse {

@@ -6,12 +6,14 @@ import org.dcmp.application.command.LogoutCommand
 import org.dcmp.application.command.SignupCommand
 import org.dcmp.application.command_handler.LoginHandler
 import org.dcmp.application.command_handler.LogoutHandler
+import org.dcmp.application.command_handler.SignupHandler
 import org.dcmp.application.service.IAuthService
 import org.springframework.stereotype.Service
 
 @Service
-class AuthService(val loginHandler: LoginHandler,
-                  val logoutHandler: LogoutHandler
+class AuthService(private val loginHandler: LoginHandler,
+                  private val logoutHandler: LogoutHandler,
+                  private val signupHandler: SignupHandler
 ): IAuthService {
 
     override fun login(loginRequest: LoginCommand): LoginResponse {
@@ -23,7 +25,7 @@ class AuthService(val loginHandler: LoginHandler,
     }
 
     override fun signup(signupCommand: SignupCommand): LoginResponse {
-        return
+        return signupHandler.handle(signupCommand);
     }
 
 

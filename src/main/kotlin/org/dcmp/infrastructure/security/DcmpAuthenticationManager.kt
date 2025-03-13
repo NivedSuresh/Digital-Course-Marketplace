@@ -15,8 +15,7 @@ import java.util.*
 
 
 @Component
-class DcmpAuthenticationManager(private val userDetailsService: DcmpUserDetailsService,
-                                private val passwordEncoder: PasswordEncoder): AuthenticationManager {
+class DcmpAuthenticationManager(private val userDetailsService: DcmpUserDetailsService): AuthenticationManager {
 
    val log: Logger = LoggerFactory.getLogger(DcmpAuthenticationManager::class.java)
 

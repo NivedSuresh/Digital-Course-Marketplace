@@ -5,7 +5,11 @@ import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.AuthorityUtils
 import org.springframework.security.core.userdetails.UserDetails
 
-data class DcmpUserDetails(val email: String, val password: String, val authority: Role, val userId: Long): UserDetails {
+data class DcmpUserDetails(
+    val email: String,
+    val passwordValue: String,
+    val authority: Role,
+    val userId: Long): UserDetails {
 
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
@@ -13,7 +17,7 @@ data class DcmpUserDetails(val email: String, val password: String, val authorit
     }
 
     override fun getPassword(): String {
-        return password;
+        return passwordValue;
     }
 
     override fun getUsername(): String {
