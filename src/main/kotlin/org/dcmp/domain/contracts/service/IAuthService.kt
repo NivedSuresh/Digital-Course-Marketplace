@@ -1,8 +1,8 @@
 package org.dcmp.domain.contracts.service
 
 import org.dcmp.application.dto.LoginResponse
-import org.dcmp.application.query.LoginQuery
-import org.dcmp.application.query.LogoutQuery
+import org.dcmp.application.command.LoginCommand
+import org.dcmp.application.command.LogoutCommand
 
 interface IAuthService {
     /**
@@ -14,7 +14,7 @@ interface IAuthService {
      * @param loginRequest The login query containing user credentials.
      * @return LoginResponse containing user details and token metadata.
      */
-    fun login(loginRequest: LoginQuery): LoginResponse
+    fun login(loginRequest: LoginCommand): LoginResponse
 
     /**
      * Logs out the user by invalidating the current session.
@@ -22,10 +22,10 @@ interface IAuthService {
      * - Sets empty values for both access and refresh tokens, sent as **HTTP-only cookies**.
      * - This ensures that existing tokens are overwritten and cannot be used further.
      *
-     * @param logoutQuery The logout query containing user session details.
+     * @param logoutCommand The logout query containing user session details.
      * @return LoginResponse with empty token values.
      */
-    fun logout(logoutQuery: LogoutQuery): LoginResponse
+    fun logout(logoutCommand: LogoutCommand): LoginResponse
 
     /**
      * Refreshes the access token using a valid refresh token.
