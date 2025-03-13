@@ -8,11 +8,13 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.web.SecurityFilterChain
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 
 
 @Configuration
 @EnableWebSecurity
-class FilterChainConfig(private val authenticationManager: AuthenticationManager) {
+class FilterChainConfig(private val authenticationManager: AuthenticationManager,
+                        private val jwtAuthFilter: JwtAuthFilter) {
 
     @Bean
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
@@ -24,10 +26,15 @@ class FilterChainConfig(private val authenticationManager: AuthenticationManager
 
         http.authorizeHttpRequests { auth ->
             auth.requestMatchers(HttpMethod.POST, "/login", "/signup", "/error").permitAll()
+                .requestMatchers("/api/v1/creator/**").hasRole("CREATOR")
+                .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
+                .requestMatchers("/api/v1/customer/**").hasAnyRole("ADMIN", "CUSTOMER")
                 .anyRequest().authenticated()
         }
 
         http.authenticationManager(authenticationManager)
+
+        http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter::class.java)
 
         return http.build()
     }
