@@ -1,19 +1,17 @@
-package org.dcmp.application.service
+package org.dcmp.application.service.impl
 
 import org.dcmp.application.dto.LoginResponse
 import org.dcmp.application.command.LoginCommand
 import org.dcmp.application.command.LogoutCommand
-import org.dcmp.application.command.RefreshTokenCommand
+import org.dcmp.application.command.SignupCommand
 import org.dcmp.application.command_handler.LoginHandler
 import org.dcmp.application.command_handler.LogoutHandler
-import org.dcmp.application.command_handler.RefreshTokenHandler
-import org.dcmp.domain.contracts.service.IAuthService
+import org.dcmp.application.service.IAuthService
 import org.springframework.stereotype.Service
 
 @Service
 class AuthService(val loginHandler: LoginHandler,
-                  val logoutHandler: LogoutHandler,
-                  val refreshTokenHandler: RefreshTokenHandler
+                  val logoutHandler: LogoutHandler
 ): IAuthService {
 
     override fun login(loginRequest: LoginCommand): LoginResponse {
@@ -24,8 +22,9 @@ class AuthService(val loginHandler: LoginHandler,
         return logoutHandler.handle(logoutCommand);
     }
 
-    override fun refreshToken(refreshToken: String): LoginResponse {
-        return refreshTokenHandler.handle(RefreshTokenCommand(refreshToken))
+    override fun signup(signupCommand: SignupCommand): LoginResponse {
+        return
     }
+
 
 }

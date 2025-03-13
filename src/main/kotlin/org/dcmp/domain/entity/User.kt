@@ -3,14 +3,16 @@ package org.dcmp.domain.entity
 
 
 import jakarta.persistence.*
+import lombok.NoArgsConstructor
 
 
 @Entity
 @Table(name = "users")
+@NoArgsConstructor
 data class User(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null,
+    val userId: Long? = null,
 
     @Column(nullable = false)
     val username: String,
@@ -22,11 +24,11 @@ data class User(
     val hashedPassword: String,
 
     @Enumerated(EnumType.STRING)
-    val role: Role,
+    val authority: Role,
 
     @OneToMany(mappedBy = "creator", cascade = [CascadeType.ALL], fetch = FetchType.LAZY, orphanRemoval = true)
     val courses: MutableList<Course> = mutableListOf(),
 
-)
+    )
 
 

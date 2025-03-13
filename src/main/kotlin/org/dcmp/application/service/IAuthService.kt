@@ -1,8 +1,9 @@
-package org.dcmp.domain.contracts.service
+package org.dcmp.application.service
 
 import org.dcmp.application.dto.LoginResponse
 import org.dcmp.application.command.LoginCommand
 import org.dcmp.application.command.LogoutCommand
+import org.dcmp.application.command.SignupCommand
 
 interface IAuthService {
     /**
@@ -27,15 +28,6 @@ interface IAuthService {
      */
     fun logout(logoutCommand: LogoutCommand): LoginResponse
 
-    /**
-     * Refreshes the access token using a valid refresh token.
-     *
-     * - Generates a new access token while issuing a fresh refresh token.
-     * - Tokens are sent as **HTTP-only cookies** to maintain security.
-     * - If the refresh token is invalid or expired, an authentication error is thrown.
-     *
-     * @param refreshToken The refresh token used to generate new tokens.
-     * @return LoginResponse containing updated user details and new tokens.
-     */
-    fun refreshToken(refreshToken: String): LoginResponse
+
+    fun signup(signupCommand: SignupCommand): LoginResponse
 }
