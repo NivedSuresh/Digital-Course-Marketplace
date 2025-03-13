@@ -2,9 +2,9 @@ package org.dcmp.domain.exception
 
 import org.springframework.http.HttpStatus
 
-class GlobalException(
+open class GlobalException(
+    message: String,
     val errorCode: ErrorCode,
-    val httpStatus: HttpStatus,
-    message: String
+    val httpStatus: HttpStatus
 ) : RuntimeException(message)
 
