@@ -17,8 +17,9 @@ class GetAllCoursesHandler(private val courseRepository: CourseRepository) : Req
     override fun handle(request: GetAllCoursesQuery): Page<Course> {
         request.offset = maxOf(request.offset, 0)
         request.limit = request.limit.coerceIn(10, 100)
+        val pageNumber = request.offset / request.limit
+        val pageable: Pageable = PageRequest.of(pageNumber, request.limit)
 
-        val pageable: Pageable = PageRequest.of(request.offset, request.limit)
         val specification = buildSpecification(request.creatorId, request.title, request.description)
         return courseRepository.findAll(specification, pageable)
     }

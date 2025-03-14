@@ -18,7 +18,8 @@ class GetCourseStatsHandler(private val purchaseRepository: PurchaseRepository):
     override fun handle(request: GetCourseStatsQuery): Page<StatsDto> {
         request.offset = maxOf(request.offset, 0)
         request.limit = request.limit.coerceIn(10, 100)
-        val pageable: Pageable = PageRequest.of(request.offset, request.limit)
+        val pageNumber = request.offset / request.limit
+        val pageable: Pageable = PageRequest.of(pageNumber, request.limit)
 
         val stats = purchaseRepository.findPurchaseStatsWithinDateRange(request.startDate, request.endDate, pageable)
 

@@ -15,7 +15,8 @@ class GetAllUsersHandler(private val userRepository: UserRepository) : RequestHa
     override fun handle(request: GetAllUsersQuery): Page<User> {
         request.offset = maxOf(request.offset, 0)
         request.limit = request.limit.coerceIn(10, 100)
-        val pageable: Pageable = PageRequest.of(request.offset, request.limit)
+        val pageNumber = request.offset / request.limit
+        val pageable: Pageable = PageRequest.of(pageNumber, request.limit)
         return userRepository.findAllByAuthorityIn(request.roles!!, pageable)
     }
 }
