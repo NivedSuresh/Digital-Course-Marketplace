@@ -1,6 +1,13 @@
 # **Course Management API**
 
+
 ## **Authentication**
+
+
+- **Auth Tokens** are sent via **HttpOnly cookies** and are automatically managed by the client (e.g., Postman, browsers).
+- This means that once you **sign up/log in as an ADMIN**, Postman (or any client) will retain the session and include the token in subsequent requests.
+- To perform actions as another role (e.g., CUSTOMER, CREATOR), you must **sign in or sign up with a different account**.
+
 
 ### **1. `POST /api/v1/login`**
 - Authenticates the user and returns an **Access Token** and **Refresh Token** in **HttpOnly cookies**.
@@ -10,6 +17,8 @@
 - Creates a new user account.
 - Returns an **Access Token** and **Refresh Token** in **HttpOnly cookies**.
 - The **Access Token** is valid for **30 minutes**.
+
+
 
 #### **Example Signup Requests for Different Roles:**
 

@@ -18,6 +18,12 @@ docker run -e SPRING_PROFILES_ACTIVE=dev \
     -p 8080:8080 nivedsuresh/digital-course-marketplace:0.0.1
 ```
 
+### Note
+- **Auth Tokens** are sent via **HttpOnly cookies** and are automatically managed by the client (e.g., Postman, browsers).
+- This means that once you **sign up/log in as an ADMIN**, Postman (or any client) will retain the session and include the token in subsequent requests.
+- To perform actions as another role (e.g., CUSTOMER, CREATOR), you must **sign in or sign up with a different account**.
+
+
 ## API Documentation and Architecture
 
 - For details on available APIs, including sample JSON requests and responses, refer to **[API_ReadMe.md](API_ReadMe.md)**.
