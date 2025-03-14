@@ -1,5 +1,11 @@
 # Project Configuration
 
+## Profiles
+This project supports two profiles:
+
+- **local**: Uses an H2 in-memory database (no external setup required).
+- **dev**: Runs on PostgreSQL (requires environment variables).
+
 ## Running with Docker
 
 ### H2 (Local)
@@ -30,11 +36,6 @@ docker run -e SPRING_PROFILES_ACTIVE=dev \
 - For the project structure, architecture overview, and the **Entity-Relationship Diagram (ERD)**, see **[Architecture_ReadMe.md](Architecture_ReadMe.md)**.
 
 
-## Profiles
-This project supports two profiles:
-
-- **local**: Uses an H2 in-memory database (no external setup required).
-- **dev**: Runs on PostgreSQL (requires environment variables).
 
 ## Database Configuration
 
