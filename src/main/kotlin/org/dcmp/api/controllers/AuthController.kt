@@ -7,10 +7,8 @@ import org.dcmp.application.command.SignupCommand
 import org.dcmp.application.dto.LoginResponse
 import org.dcmp.application.service.IAuthService
 import org.dcmp.application.service.impl.AuthService
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.http.HttpStatus
+import org.springframework.web.bind.annotation.*
 
 
 @RestController
@@ -18,6 +16,7 @@ class AuthController(private val authService: IAuthService, private val cookieUt
 
 
     @PostMapping("login")
+    @ResponseStatus(HttpStatus.ACCEPTED)
     fun login(@RequestBody loginCommand: LoginCommand, response: HttpServletResponse): LoginResponse {
         val login = this.authService.login(loginCommand)
         this.cookieUtil.appendCookies(response, login)
@@ -25,6 +24,7 @@ class AuthController(private val authService: IAuthService, private val cookieUt
     }
 
     @PostMapping("signup")
+    @ResponseStatus(HttpStatus.CREATED)
     fun signup(@RequestBody signupCommand: SignupCommand, response: HttpServletResponse): LoginResponse {
         val signup = this.authService.signup(signupCommand)
         this.cookieUtil.appendCookies(response, signup)
