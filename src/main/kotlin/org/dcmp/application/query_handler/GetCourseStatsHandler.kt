@@ -7,19 +7,16 @@ import org.dcmp.infrastructure.persistence.jpa.PurchaseRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
-import org.springframework.data.support.PageableExecutionUtils
 import org.springframework.stereotype.Component
-import java.util.function.LongSupplier
 
 
 @Component
 class GetCourseStatsHandler(private val purchaseRepository: PurchaseRepository): RequestHandler<GetCourseStatsQuery, Page<StatsDto>> {
 
     override fun handle(request: GetCourseStatsQuery): Page<StatsDto> {
-        request.offset = maxOf(request.offset, 0)
-        request.limit = request.limit.coerceIn(10, 100)
-        val pageNumber = request.offset / request.limit
-        val pageable: Pageable = PageRequest.of(pageNumber, request.limit)
+        request.page = maxOf(request.page, 1)
+        request.limit = request.limit.coerceIn(1, 100)
+        val pageable: Pageable = PageRequest.of(request.page - 1, request.limit)
 
         val stats = purchaseRepository.findPurchaseStatsWithinDateRange(request.startDate, request.endDate, pageable)
 

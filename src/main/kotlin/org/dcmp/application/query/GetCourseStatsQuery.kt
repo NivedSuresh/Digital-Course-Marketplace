@@ -8,4 +8,4 @@ import java.time.LocalDate
 class GetCourseStatsQuery(val startDate: LocalDate = LocalDate.now().minusYears(1),
                           val endDate: LocalDate = LocalDate.now(),
                           var limit: Int = 10,
-                          var offset: Int = 0): Request<Page<StatsDto>>
+                          var page: Int = 1): Request<Page<StatsDto>>

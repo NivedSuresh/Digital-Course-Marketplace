@@ -15,10 +15,9 @@ import org.springframework.stereotype.Component
 class GetAllCoursesHandler(private val courseRepository: CourseRepository) : RequestHandler<GetAllCoursesQuery, Page<Course>> {
 
     override fun handle(request: GetAllCoursesQuery): Page<Course> {
-        request.offset = maxOf(request.offset, 0)
-        request.limit = request.limit.coerceIn(10, 100)
-        val pageNumber = request.offset / request.limit
-        val pageable: Pageable = PageRequest.of(pageNumber, request.limit)
+        request.page = maxOf(request.page, 1)
+        request.limit = request.limit.coerceIn(1, 100)
+        val pageable: Pageable = PageRequest.of(request.page - 1, request.limit)
 
         val specification = buildSpecification(request.creatorId, request.title, request.description)
         return courseRepository.findAll(specification, pageable)
