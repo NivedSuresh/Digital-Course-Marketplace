@@ -91,6 +91,15 @@ Signup the following users into the system:
 
 ---
 
+## **Admin and Statistics**
+
+### **7. `GET /api/v1/user?offset=0&limit=10&roles=`**
+- **Access Control:**
+  - Only accessible to users with the `ADMIN` role.
+  - Returns all users with roles `CUSTOMER` and `CREATOR` if no role filter is provided.
+  - Results are paginated based on the `offset` and `limit` parameters.
+
+---
 
 ## **Additional Notes**
 - **Authorization:**

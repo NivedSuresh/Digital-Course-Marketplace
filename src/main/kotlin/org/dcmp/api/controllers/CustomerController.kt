@@ -15,10 +15,11 @@ class CustomerController(private val purchaseService: IPurchaseService) {
 
     @PostMapping("/buy/course/{courseId}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    fun buy(@PathVariable courseId: Long): Boolean {
+    fun buy(@PathVariable courseId: Long): Map<String, Boolean> {
         val customerId = SecurityContextHolder.getContext().authentication.name.toLong()
-        return {"success" : purchaseService.purchase(PurchaseCommand(courseId, customerId))};
+        return mapOf("success" to purchaseService.purchase(PurchaseCommand(courseId, customerId)))
     }
+
 
 
 }

@@ -28,6 +28,8 @@ class FilterChainConfig(private val authenticationManager: AuthenticationManager
         http.authorizeHttpRequests { it
             .requestMatchers("/login", "/logout", "/signup").permitAll()
             .requestMatchers(HttpMethod.GET, "/course").authenticated()
+            .requestMatchers(HttpMethod.GET, "/user").hasAuthority("ADMIN")
+            .requestMatchers(HttpMethod.GET, "/stats").hasAuthority("ADMIN")
             .requestMatchers(HttpMethod.POST, "/customer/buy/course/*").hasAuthority("CUSTOMER")
             .requestMatchers(HttpMethod.GET, "/creator/course").hasAnyAuthority("CREATOR")
             .requestMatchers(HttpMethod.POST, "/creator/course").hasAnyAuthority("CREATOR", "ADMIN") }

@@ -9,6 +9,7 @@ import jakarta.persistence.Id
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
 import jakarta.persistence.Table
+import jakarta.persistence.UniqueConstraint
 import java.time.LocalDate
 
 
@@ -17,7 +18,10 @@ import java.time.LocalDate
  * Will act as a many-to-many table for user <-> bought course
  * */
 @Entity
-@Table(name = "purchases")
+@Table(
+    name = "purchases",
+    uniqueConstraints = [UniqueConstraint(columnNames = ["customer_id", "course_id"])]
+)
 data class Purchase(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
