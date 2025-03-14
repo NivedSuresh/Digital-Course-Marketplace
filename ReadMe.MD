@@ -18,6 +18,12 @@ docker run -e SPRING_PROFILES_ACTIVE=dev \
     -p 8080:8080 nivedsuresh/digital-course-marketplace:0.0.1
 ```
 
+## API Documentation and Architecture
+
+- For details on available APIs, including sample JSON requests and responses, refer to **[API_ReadMe.md](API_ReadMe.md)**.
+- For the project structure, architecture overview, and the **Entity-Relationship Diagram (ERD)**, see **[Architecture_ReadMe.md](Architecture_ReadMe.md)**.
+
+
 ## Profiles
 This project supports two profiles:
 
