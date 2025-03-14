@@ -21,7 +21,7 @@ import java.time.LocalDate
 data class Purchase(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long = 0,
+    val id: Long? = null,
 
     /* This property will help us to load customer_id without loading the customer */
     @Column(name = "customer_id", nullable = false)
@@ -29,7 +29,7 @@ data class Purchase(
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id", nullable = false, insertable = false, updatable = false)
-    val customer: User,
+    val customer: User? = null,
 
     /* This property will help us to load course_id without loading the course */
     @Column(name = "course_id", nullable = false)
@@ -37,7 +37,7 @@ data class Purchase(
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id", nullable = false, insertable = false, updatable = false)
-    val course: Course,
+    val course: Course? = null,
 
     @Column(nullable = false)
     val amountPaid: Double,

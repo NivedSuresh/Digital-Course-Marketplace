@@ -10,41 +10,21 @@ import org.dcmp.domain.contracts.PagedResult
 import org.dcmp.domain.entity.Course
 import org.slf4j.LoggerFactory
 import org.springframework.data.domain.Page
-import org.springframework.data.web.PagedResourcesAssembler
-import org.springframework.hateoas.EntityModel
-import org.springframework.hateoas.PagedModel
 import org.springframework.http.HttpStatus
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.bind.annotation.*
 
 
 @RestController
-@RequestMapping("/creator")
-class CreatorController(private val courseService: ICourseService) {
+class CourseController(private val courseService: ICourseService) {
 
     private val logger = LoggerFactory.getLogger(javaClass)
-
-
-    @PostMapping("/course")
-    @ResponseStatus(HttpStatus.CREATED)
-    fun createCourse(@RequestBody command: CreateCourseCommand): CourseDto {
-        logger.info("Creating course")
-        val course = this.courseService.create(command)
-        return CourseMapper.toDto(course)
-    }
 
 
     @GetMapping("/course")
     @ResponseStatus(HttpStatus.OK)
     fun getAllCourses(@ModelAttribute command: GetAllCoursesQuery): PagedResult<CourseDto> {
-
         logger.info("Getting all courses")
-
-        /*
-         * Ensuring the creator can only access their own courses
-         * by explicitly setting the authenticated user's ID as the creator ID.
-         */
-        command.creatorId = SecurityContextHolder.getContext().authentication.name.toLong()
 
         val courses: Page<Course> = this.courseService.findByCreatorPaginated(command)
 
@@ -55,7 +35,5 @@ class CreatorController(private val courseService: ICourseService) {
             offset = (courses.number * courses.size)
         )
     }
-
-
 
 }

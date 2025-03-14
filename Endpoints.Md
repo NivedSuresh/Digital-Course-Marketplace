@@ -63,9 +63,40 @@ Signup the following users into the system:
 - If the user is **ADMIN**, they can create a course for **any** creator by specifying the `creatorId`.
 - If the user is **CREATOR**, the `creatorId` will be **overwritten** with their own (i.e., the principal’s) ID.
 
+
+### **4. `GET /api/v1/creator/course?offset=0&limit=10&title=&description=`**
+- **Access Control:**
+  - Requires the **CREATOR** role.
+  - A **CREATOR** can view only their own courses.
+  - Supports optional filtering by `title` and `description`.
+  - Results are paginated based on `offset` and `limit` parameters.
+  - **Title and description filters use a case-insensitive partial match**, meaning a search for `"otl"` will match `"Kotlin"`.
+
+
+### **5. `GET /api/v1/course?offset=0&limit=10&creatorId=&title=&description=`**
+- **Access Control:**
+  - Available to any authenticated user. Fetches all available courses in the marketplace.
+  - Supports optional filtering by `title` and `description` and `creatorId`.
+  - Results are paginated based on `offset` and `limit` parameters.
+  - **Title and description filters use a case-insensitive partial match**, meaning a search for `"otl"` will match `"Kotlin"`.
 ---
+
+## **Purchase Management**
+
+### **6. `POST /api/v1/customer/buy/course/{courseId}`**
+- **Access Control:**
+  - Only accessible to users with the CUSTOMER role.
+  - The price of the purchase = price of the course.
+  - 202 Accepted – Purchase successful.
+
+---
+
 
 ## **Additional Notes**
-- **Authorization**: All endpoints requiring authorization expect the `AccessToken` in **HttpOnly cookies**.
+- **Authorization:**
+  - All protected endpoints require an `AccessToken`, which must be sent via **HttpOnly cookies**.
+- **Access Denied Handling:**
+  - If a user does not have the required permissions, the API responds with **`403 Forbidden`**.
 
 ---
+

@@ -25,7 +25,8 @@ class CreateCourseHandler(private val courseRepository: CourseRepository,
         if (!isAdmin) {
             request.creatorId = principalId
         }
-        else if (!userRepository.existsByIdAndAuthority(request.creatorId, Role.CREATOR)) {
+
+        if (!userRepository.existsByIdAndAuthority(request.creatorId, Role.CREATOR)) {
             throw EntityNotFoundException("Creator");
         }
 
