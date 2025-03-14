@@ -1,5 +1,23 @@
 # Project Configuration
 
+## Running with Docker
+
+### H2 (Local)
+```sh
+docker run -e SPRING_PROFILES_ACTIVE=local -p 8080:8080 nivedsuresh/digital-course-marketplace:0.0.1
+```
+
+### PostgreSQL (Dev)
+```sh
+docker run -e SPRING_PROFILES_ACTIVE=dev \
+    -e SPRING_DATASOURCE_HOST=host.docker.internal \
+    -e SPRING_DATASOURCE_PORT=5432 \
+    -e SPRING_DATASOURCE_NAME=postgres \
+    -e SPRING_DATASOURCE_USERNAME=postgres \
+    -e SPRING_DATASOURCE_PASSWORD=admin \
+    -p 8080:8080 nivedsuresh/digital-course-marketplace:0.0.1
+```
+
 ## Profiles
 This project supports two profiles:
 
@@ -23,6 +41,7 @@ export SPRING_DATASOURCE_PASSWORD=your_password
 ```
 
 ## Liquibase Migrations
+- Migrations are automatically handled by Liquibase when running the app manually or when running the container.
 - Enabled for `dev` profile.
 - Migration scripts are in `src/main/resources/db/changelog/`.
 - The changelog file is `db.changelog-master.xml`.
@@ -42,25 +61,4 @@ export SPRING_DATASOURCE_PASSWORD=your_password
 ```sh
 ./mvnw spring-boot:run -Dspring-boot.run.profiles=dev
 ```
-
-## Running with Docker
-
-### H2 (Local)
-```sh
-docker run -e SPRING_PROFILES_ACTIVE=local -p 8080:8080 my-spring-app
-```
-
-### PostgreSQL (Dev)
-```sh
-docker run -e SPRING_PROFILES_ACTIVE=dev \
-    -e SPRING_DATASOURCE_HOST=your-db-host \
-    -e SPRING_DATASOURCE_PORT=5432 \
-    -e SPRING_DATASOURCE_NAME=your-db-name \
-    -e SPRING_DATASOURCE_USERNAME=your-db-user \
-    -e SPRING_DATASOURCE_PASSWORD=your-db-password \
-    -p 8080:8080 my-spring-app
-```
-
-
----
 

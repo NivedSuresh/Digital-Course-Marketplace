@@ -1,7 +1,9 @@
-FROM openjdk:21
+FROM eclipse-temurin:21-jre
+
+WORKDIR /app
+
 EXPOSE 8080
 
-ADD target/DigitalCourseMarketplace-0.0.1.jar DigitalCourseMarketplace-0.0.1.jar
-ENTRYPOINT ["java","-jar","/DigitalCourseMarketplace-0.0.1.jar"]
+COPY target/DigitalCourseMarketplace-0.0.1.jar app.jar
 
-
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
