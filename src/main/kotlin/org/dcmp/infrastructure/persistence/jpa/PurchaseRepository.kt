@@ -17,24 +17,26 @@ interface PurchaseRepository : JpaRepository<Purchase, Long> {
 
     @Query(
         value = """
-        SELECT p.course_id, c.title, SUM(p.amount_paid) AS total_amount_paid
-        FROM purchases p
-        JOIN courses c ON c.id = p.course_id
-        WHERE (COALESCE(:startDate, NULL)::DATE IS NULL OR p.purchase_date >= :startDate)
-          AND (COALESCE(:endDate, NULL)::DATE IS NULL OR p.purchase_date <= :endDate)
-        GROUP BY p.course_id, c.title
-        ORDER BY total_amount_paid DESC
+    SELECT p.course.id as courseId, c.title as title, SUM(p.amountPaid) as totalAmountPaid
+    FROM Purchase p
+    JOIN p.course c
+    WHERE (COALESCE(:startDate, '1970-01-01') IS NULL OR p.purchaseDate >= :startDate)
+      AND (COALESCE(:endDate, '2099-12-31') IS NULL OR p.purchaseDate <= :endDate)
+    GROUP BY p.course.id, c.title
+    ORDER BY SUM(p.amountPaid) DESC
     """,
         countQuery = """
-    SELECT COUNT(DISTINCT p.course_id)
-    FROM purchases p
-    WHERE (:startDate IS NULL OR p.purchase_date >= :startDate)
-      AND (:endDate IS NULL OR p.purchase_date <= :endDate)
-    """,
-        nativeQuery = true
+    SELECT COUNT(DISTINCT p.course.id)
+    FROM Purchase p
+    WHERE (COALESCE(:startDate, '1970-01-01') IS NULL OR p.purchaseDate >= :startDate)
+      AND (COALESCE(:endDate, '2099-12-31') IS NULL OR p.purchaseDate <= :endDate)
+    """
     )
-    fun findPurchaseStatsWithinDateRange(startDate: LocalDate, endDate: LocalDate, pageable: Pageable): Page<StatsDto>
-
+    fun findPurchaseStatsWithinDateRange(
+        @Param("startDate") startDate: LocalDate?,
+        @Param("endDate") endDate: LocalDate?,
+        pageable: Pageable
+    ): Page<StatsDto>
 
 }
 
