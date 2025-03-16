@@ -1,6 +1,7 @@
 package org.dcmp.api.controllers
 
 import jakarta.servlet.http.HttpServletResponse
+import jakarta.validation.Valid
 import org.dcmp.api.utils.CookieUtil
 import org.dcmp.application.command.LoginCommand
 import org.dcmp.application.command.SignupCommand
@@ -25,7 +26,7 @@ class AuthController(private val authService: IAuthService, private val cookieUt
 
     @PostMapping("signup")
     @ResponseStatus(HttpStatus.CREATED)
-    fun signup(@RequestBody signupCommand: SignupCommand, response: HttpServletResponse): LoginResponse {
+    fun signup(@RequestBody @Valid signupCommand: SignupCommand, response: HttpServletResponse): LoginResponse {
         val signup = this.authService.signup(signupCommand)
         this.cookieUtil.appendCookies(response, signup)
         return signup;

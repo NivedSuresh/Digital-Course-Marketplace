@@ -1,5 +1,6 @@
 package org.dcmp.api.controllers
 
+import jakarta.validation.Valid
 import org.dcmp.application.command.CreateCourseCommand
 import org.dcmp.application.dto.CourseDto
 import org.dcmp.application.mapper.CourseMapper
@@ -27,7 +28,7 @@ class CreatorController(private val courseService: ICourseService) {
 
     @PostMapping("/course")
     @ResponseStatus(HttpStatus.CREATED)
-    fun createCourse(@RequestBody command: CreateCourseCommand): CourseDto {
+    fun createCourse(@RequestBody @Valid command: CreateCourseCommand): CourseDto {
         logger.info("Creating course")
         val course = this.courseService.create(command)
         return CourseMapper.toDto(course)

@@ -6,8 +6,11 @@ import org.dcmp.domain.contracts.RequestHandler
 import org.dcmp.domain.entity.Course
 import org.dcmp.domain.entity.Role
 import org.dcmp.domain.exception.EntityNotFoundException
+import org.dcmp.domain.exception.ErrorCode
+import org.dcmp.domain.exception.UnexpectedStateException
 import org.dcmp.infrastructure.persistence.jpa.CourseRepository
 import org.dcmp.infrastructure.persistence.jpa.UserRepository
+import org.springframework.http.HttpStatus
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Component
 
@@ -26,7 +29,11 @@ class CreateCourseHandler(private val courseRepository: CourseRepository,
             request.creatorId = principalId
         }
 
-        if (!userRepository.existsByIdAndAuthority(request.creatorId, Role.CREATOR)) {
+        if (isAdmin && request.creatorId == null) {
+            throw UnexpectedStateException("Creator should be provided", ErrorCode.EXPECTATION_FAILED, HttpStatus.BAD_REQUEST)
+        }
+
+        if (!userRepository.existsByIdAndAuthority(request.creatorId!!, Role.CREATOR)) {
             throw EntityNotFoundException("Creator");
         }
 
