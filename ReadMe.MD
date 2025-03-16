@@ -10,7 +10,7 @@ This project supports two profiles:
 
 ### H2 (Local)
 ```sh
-docker run -e SPRING_PROFILES_ACTIVE=local -p 8080:8080 nivedsuresh/digital-course-marketplace:0.0.1
+docker run -e SPRING_PROFILES_ACTIVE=local -p 8080:8080 nivedsuresh/digital-course-marketplace:0.0.2
 ```
 
 ### PostgreSQL (Dev)
@@ -21,7 +21,7 @@ docker run -e SPRING_PROFILES_ACTIVE=dev \
     -e SPRING_DATASOURCE_NAME=postgres \
     -e SPRING_DATASOURCE_USERNAME=postgres \
     -e SPRING_DATASOURCE_PASSWORD=admin \
-    -p 8080:8080 nivedsuresh/digital-course-marketplace:0.0.1
+    -p 8080:8080 nivedsuresh/digital-course-marketplace:0.0.2
 ```
 
 ### Note
