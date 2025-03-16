@@ -13,9 +13,17 @@ import org.springframework.stereotype.Component
 class GetAllUsersHandler(private val userRepository: UserRepository) : RequestHandler<GetAllUsersQuery, Page<User>> {
 
     override fun handle(request: GetAllUsersQuery): Page<User> {
-        request.page = maxOf(request.page, 1)
-        request.limit = request.limit.coerceIn(1, 100)
-        val pageable: Pageable = PageRequest.of(request.page - 1, request.limit)
+
+        if (request.page == null){
+            request.page = 1
+        }
+        if (request.limit == null){
+            request.limit = 10
+        }
+
+        request.page = maxOf(request.page!!, 1)
+        request.limit = request.limit!!.coerceIn(1, 100)
+        val pageable: Pageable = PageRequest.of(request.page!! - 1, request.limit!!)
 
         return userRepository.findAllByAuthorityIn(request.roles!!, pageable)
     }

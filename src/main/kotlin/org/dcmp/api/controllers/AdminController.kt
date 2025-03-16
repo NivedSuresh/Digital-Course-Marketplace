@@ -23,6 +23,7 @@ class AdminController(private val adminService: IAdminService) {
         if (getAllUsersQuery.roles == null || getAllUsersQuery.roles!!.isEmpty()) {
             getAllUsersQuery.roles = mutableListOf(Role.CREATOR, Role.CUSTOMER)
         }
+
         val users = adminService.getUsers(getAllUsersQuery)
         return PagedResult(
             items = users.content.map { user -> UserMapper.toDto(user) },

@@ -1,6 +1,7 @@
 package org.dcmp.application.query_handler
 
 import jakarta.persistence.criteria.Predicate
+import org.apache.logging.log4j.util.Strings
 import org.dcmp.application.query.GetAllCoursesQuery
 import org.dcmp.domain.contracts.RequestHandler
 import org.dcmp.domain.entity.Course
@@ -15,11 +16,28 @@ import org.springframework.stereotype.Component
 class GetAllCoursesHandler(private val courseRepository: CourseRepository) : RequestHandler<GetAllCoursesQuery, Page<Course>> {
 
     override fun handle(request: GetAllCoursesQuery): Page<Course> {
-        request.page = maxOf(request.page, 1)
-        request.limit = request.limit.coerceIn(1, 100)
-        val pageable: Pageable = PageRequest.of(request.page - 1, request.limit)
 
-        val specification = buildSpecification(request.creatorId, request.title, request.description)
+        if (request.page == null){
+            request.page = 1
+        }
+        if (request.limit == null){
+            request.limit = 10
+        }
+
+        if (request.title == null){
+            request.title = "";
+        }
+
+        if (request.description == null){
+            request.description = "";
+        }
+
+
+        request.page = maxOf(request.page!!, 1)
+        request.limit = request.limit!!.coerceIn(1, 100)
+        val pageable: Pageable = PageRequest.of(request.page!! - 1, request.limit!!)
+
+        val specification = buildSpecification(request.creatorId, request.title!!, request.description!!)
         return courseRepository.findAll(specification, pageable)
     }
 
