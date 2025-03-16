@@ -16,7 +16,7 @@ data class SignupCommand(
     val email: String,
 
     @field:NotBlank(message = "Password cannot be blank")
-    @field:Size(min = 8, max = 100, message = "Password must be between 8 and 100 characters")
+    @field:Size(min = 3, max = 100, message = "Password must be between 3 and 100 characters")
     var password: String,
 
     @field:NotNull(message = "Role must be specified")
