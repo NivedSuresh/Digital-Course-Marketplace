@@ -106,11 +106,24 @@
   - Returns all users with roles **CUSTOMER** and **CREATOR** if no role filter is provided.
   - Supports pagination with `page` and `limit` parameters.
 
-### **8. `GET /api/v1/stats?startDate=2024-01-01&endDate=2026-12-31&page=1&limit=10`**
+### **8. `GET /api/v1/admin/stats?startDate=2024-01-01&endDate=2026-12-31&page=1&limit=10`**
 - **Access Control:**
   - Only accessible to users with the **ADMIN** role.
-  - Returns all purchased courses along with the total amount paid.
+  - Returns all purchased courses along with the total amount paid, totalCountSold (per course), totalAmountPaid (Entirely) and totalCountSold (Entirely).
   - Supports pagination with `page` and `limit` parameters.
+
+### **9. `GET /api/v1/creator/stats?startDate=2024-01-01&endDate=2026-12-31&page=1&limit=10`**
+- **Access Control:**
+  - Only accessible to users with the **CREATOR** role.
+  - Returns all purchased courses of the creator along with the total amount paid, totalCountSold (per course), totalAmountPaid (Entirely) and totalCountSold (Entirely).
+  - Supports pagination with `page` and `limit` parameters.
+
+## **Customer Management**
+
+### **10. `GET /api/v1/customer/course`**
+- **Access Control:**
+  - Only accessible to users with the **CUSTOMER** role.
+  - Returns a list of purchased course for the authenticated customer.
 
 ---
 
