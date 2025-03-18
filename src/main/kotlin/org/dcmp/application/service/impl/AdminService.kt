@@ -1,5 +1,6 @@
 package org.dcmp.application.service.impl
 
+import org.dcmp.application.dto.CourseStatsDto
 import org.dcmp.application.dto.StatsDto
 import org.dcmp.application.query.GetAllUsersQuery
 import org.dcmp.application.query.GetCourseStatsQuery
@@ -17,7 +18,7 @@ class AdminService(private val getAllUsersHandler: GetAllUsersHandler, private v
         return getAllUsersHandler.handle(getAllUsersQuery);
     }
 
-    override fun getCourseStats(courseStatsQuery: GetCourseStatsQuery): Page<StatsDto> {
+    override fun getCourseStats(courseStatsQuery: GetCourseStatsQuery): StatsDto {
         return getCourseStatsHandler.handle(courseStatsQuery);
     }
 

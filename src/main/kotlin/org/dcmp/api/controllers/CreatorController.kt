@@ -3,8 +3,11 @@ package org.dcmp.api.controllers
 import jakarta.validation.Valid
 import org.dcmp.application.command.CreateCourseCommand
 import org.dcmp.application.dto.CourseDto
+import org.dcmp.application.dto.StatsDto
 import org.dcmp.application.mapper.CourseMapper
 import org.dcmp.application.query.GetAllCoursesQuery
+import org.dcmp.application.query.GetCourseStatsQuery
+import org.dcmp.application.service.IAdminService
 import org.dcmp.application.service.ICourseService
 import org.dcmp.application.service.impl.CourseService
 import org.dcmp.domain.contracts.PagedResult
@@ -15,13 +18,15 @@ import org.springframework.data.web.PagedResourcesAssembler
 import org.springframework.hateoas.EntityModel
 import org.springframework.hateoas.PagedModel
 import org.springframework.http.HttpStatus
+import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.web.bind.annotation.*
 
 
 @RestController
 @RequestMapping("/creator")
-class CreatorController(private val courseService: ICourseService) {
+class CreatorController(private val courseService: ICourseService, private val adminService: IAdminService) {
 
     private val logger = LoggerFactory.getLogger(javaClass)
 
@@ -58,5 +63,10 @@ class CreatorController(private val courseService: ICourseService) {
     }
 
 
+    @GetMapping("/stats")
+    fun getStats(@ModelAttribute courseStatsQuery: GetCourseStatsQuery, @AuthenticationPrincipal principal: UserDetails): StatsDto {
+        courseStatsQuery.principalId = principal.username.toLong();
+        return adminService.getCourseStats(courseStatsQuery)
+    }
 
 }
