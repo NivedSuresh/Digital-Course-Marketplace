@@ -31,6 +31,7 @@ class FilterChainConfig(private val authenticationManager: AuthenticationManager
             .requestMatchers(HttpMethod.GET, "/user").hasAuthority("ADMIN")
             .requestMatchers(HttpMethod.GET, "/stats").hasAuthority("ADMIN")
             .requestMatchers(HttpMethod.POST, "/customer/buy/course/*").hasAuthority("CUSTOMER")
+            .requestMatchers(HttpMethod.GET, "/customer/course").hasAuthority("CUSTOMER")
             .requestMatchers(HttpMethod.GET, "/creator/course").hasAnyAuthority("CREATOR")
             .requestMatchers(HttpMethod.POST, "/creator/course").hasAnyAuthority("CREATOR", "ADMIN") }
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter::class.java)

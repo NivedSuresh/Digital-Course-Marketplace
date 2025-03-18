@@ -1,6 +1,7 @@
 package org.dcmp.infrastructure.persistence.jpa
 
 import org.dcmp.application.dto.StatsDto
+import org.dcmp.domain.entity.Course
 import org.dcmp.domain.entity.Purchase
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -39,5 +40,8 @@ interface PurchaseRepository : JpaRepository<Purchase, Long>, PagingAndSortingRe
         pageable: Pageable
     ): Page<StatsDto>
 
+
+    @Query("SELECT p.course FROM Purchase p WHERE p.customerId = :customerId")
+    fun findAllPurchasedCourseIdByCustomerId(customerId: Long, pageable: Pageable): Page<Course>
 }
 
